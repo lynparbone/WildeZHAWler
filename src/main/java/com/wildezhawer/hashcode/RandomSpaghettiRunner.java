@@ -3,10 +3,7 @@ package com.wildezhawer.hashcode;
 import com.wildezhawer.hashcode.config.SimulationConfiguration;
 import com.wildezhawer.hashcode.model.InputData;
 import com.wildezhawer.hashcode.model.OutputData;
-import com.wildezhawer.hashcode.service.DataStore;
 import com.wildezhawer.hashcode.service.FileReaderService;
-
-import java.util.List;
 
 public class RandomSpaghettiRunner {
 
@@ -17,11 +14,10 @@ public class RandomSpaghettiRunner {
             InputData inputData = readFileContent(filename);
             writeFileContent(null);
         }
-        System.out.println(DataStore.text);
     }
 
     private InputData readFileContent(String filename) throws Exception {
-        List<String> lines = fileReader.read(filename);
+        fileReader.read("data/" + filename);
         return null;
     }
 
