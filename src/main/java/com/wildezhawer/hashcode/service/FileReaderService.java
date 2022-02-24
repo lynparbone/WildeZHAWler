@@ -10,9 +10,9 @@ public class FileReaderService {
 
     private final static String DATA_FOLDER = System.getProperty("user.dir") + "/data/";
 
-
     public List<String> read(String filename) throws Exception {
         List<String> lines = new ArrayList<>();
+        DataStore.text = "World";
 
         try {
             File myObj = new File(DATA_FOLDER + filename);
