@@ -105,8 +105,27 @@ public class SimulationRunner {
 
     private void levelUpContributers(List<Project> completedProjects) {
         for(Project project : completedProjects){
-            List<String> contributers = projectStaffing.get(project.getName());
-            for(){
+            List<String> staffedContributers = projectStaffing.get(project.getName());
+            int i = 0;
+            for(String skill : project.roles.keySet()){
+                int level = project.roles.get(skill);
+                String name = staffedContributers.get(i);
+                for(Contributor cont : contributors){
+                    if(cont.name.equals(name)){
+                        if(level >= cont.skills.getOrDefault(skill, 0)){
+                            Integer lvl = cont.skills.get(skill);
+                            if(lvl != null){
+                                lvl += 1;
+                                cont.skills.put(skill, lvl);
+                            }
+                            else{
+                                cont.skills.put(skill,1);
+                            }
+                        }
+                    }
+                }
+
+
 
             }
         }
@@ -136,6 +155,8 @@ public class SimulationRunner {
         projectStaffing.put(project.getName(), contributorNames);
         projectStatus.put(project.getName(), Status.STARTED);
     }
+
+
 
 
 }
