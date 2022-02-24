@@ -49,7 +49,7 @@ public class SimulationRunner {
             }
 
             List<Project> completedProjects = completeProject(dayCounter);
-            levelUpContributers(completedProjects);
+            // levelUpContributers(completedProjects);
 
             changeProjectStatusToFalse(dayCounter);
 
