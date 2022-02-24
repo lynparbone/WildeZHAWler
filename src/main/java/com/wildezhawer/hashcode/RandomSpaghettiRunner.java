@@ -1,28 +1,43 @@
 package com.wildezhawer.hashcode;
 
 import com.wildezhawer.hashcode.config.SimulationConfiguration;
-import com.wildezhawer.hashcode.model.InputData;
-import com.wildezhawer.hashcode.model.OutputData;
+import com.wildezhawer.hashcode.service.DataStore;
 import com.wildezhawer.hashcode.service.FileReaderService;
+import com.wildezhawer.hashcode.service.FileWriterService;
+
+import java.util.ArrayList;
 
 public class RandomSpaghettiRunner {
 
     FileReaderService fileReader = new FileReaderService();
+    FileWriterService fileWriter = new FileWriterService();
 
     public void start() throws Exception {
         for (String filename : SimulationConfiguration.FILES_TO_READ) {
-            InputData inputData = readFileContent(filename);
-            writeFileContent(null);
+            read(filename);
+
+            //Simulation here
+
+
+
+
+            write(filename);
+            reset();
         }
     }
 
-    private InputData readFileContent(String filename) throws Exception {
-        fileReader.read("data/" + filename);
-        return null;
+    private void reset() {
+        DataStore.projects = new ArrayList<>();
+        DataStore.contributors = new ArrayList<>();
+        DataStore.plannedProjects = new ArrayList<>();
     }
 
-    private void writeFileContent(OutputData data) {
+    void read(String filename) throws Exception {
+        fileReader.read("data/" + filename);
+    }
 
+    private void write(String filename) throws Exception {
+        fileWriter.writeFile("out/" + filename);
     }
 
 
