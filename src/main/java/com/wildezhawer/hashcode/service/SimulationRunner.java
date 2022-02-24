@@ -2,6 +2,7 @@ package com.wildezhawer.hashcode.service;
 
 import com.wildezhawer.hashcode.model.Contributor;
 import com.wildezhawer.hashcode.model.Project;
+import com.wildezhawer.hashcode.model.Skill;
 import lombok.AllArgsConstructor;
 
 import java.util.*;
@@ -124,20 +125,21 @@ public class SimulationRunner {
     private void levelUpContributers(List<Project> completedProjects) {
         for(Project project : completedProjects){
             List<String> staffedContributers = projectStaffing.get(project.getName());
-            int i = 0;
-            for(String skill : project.roles.keySet()){
-                int level = project.roles.get(skill);
+            List<Skill> skills = project.roles;
+            for(int i = 0; i < skills.size(); i++){
+                Skill skill = skills.get(i);
+                int level = skill.level;
                 String name = staffedContributers.get(i);
                 for(Contributor cont : contributors){
                     if(cont.name.equals(name)){
-                        if(level >= cont.skills.getOrDefault(skill, 0)){
-                            Integer lvl = cont.skills.get(skill);
+                        if(level >= cont.skills.getOrDefault(skill.name, 0)){
+                            Integer lvl = cont.skills.get(skill.name);
                             if(lvl != null){
                                 lvl += 1;
-                                cont.skills.put(skill, lvl);
+                                cont.skills.put(skill.name, lvl);
                             }
                             else{
-                                cont.skills.put(skill,1);
+                                cont.skills.put(skill.name,1);
                             }
                         }
                     }
