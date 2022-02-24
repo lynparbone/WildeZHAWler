@@ -104,5 +104,29 @@ public class SimulationRunner {
 
     }
 
+    private List<Contributor> getAllAvailableContributers() {
+        List<Contributor> availableContributers = new ArrayList<>();
+
+        for (Contributor contributor : contributors) {
+            boolean isAvailable = true;
+
+            for (Project project : projects) {
+                if (projectStatus.get(project.getName()) == Status.STARTED) {
+                    for (String contributerNameFromStaffingList : projectStaffing.get(project.getName())) {
+                        if (contributerNameFromStaffingList.equals(contributor.getName())) {
+                            isAvailable = false;
+                        }
+                    }
+                }
+            }
+
+            if (isAvailable) {
+                availableContributers.add(contributor);
+            }
+        }
+
+        return availableContributers;
+    }
+
 
 }
