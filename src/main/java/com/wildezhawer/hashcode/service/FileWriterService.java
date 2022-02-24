@@ -18,6 +18,7 @@ public class FileWriterService {
         newLine();
         for (PlannedProject plannedProject : DataStore.plannedProjects){
             write(plannedProject.project.name);
+            newLine();
             List<String> contributorNamesAsList = plannedProject.contributors.stream().map(contributor -> contributor.name).collect(Collectors.toList());
             write(String.join( " ", contributorNamesAsList));
         }
@@ -26,7 +27,11 @@ public class FileWriterService {
 
 
     private void newLine() {
-        write("\n");
+        try {
+            bufferedWriter.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
