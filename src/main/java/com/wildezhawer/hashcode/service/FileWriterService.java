@@ -20,6 +20,7 @@ public class FileWriterService {
             write(plannedProject.project);
             newLine();
             write(String.join( " ", plannedProject.contributors));
+            newLine();
         }
         close();
     }
