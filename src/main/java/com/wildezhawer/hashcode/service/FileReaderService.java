@@ -2,9 +2,11 @@ package com.wildezhawer.hashcode.service;
 
 import com.wildezhawer.hashcode.model.Contributor;
 import com.wildezhawer.hashcode.model.Project;
+import com.wildezhawer.hashcode.model.Skill;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FileReaderService {
@@ -57,12 +59,15 @@ public class FileReaderService {
                 project.bestBefore = Integer.parseInt(items[3]);
 
                 int numberOfRoles = Integer.parseInt(items[4]);
-                project.roles = new HashMap<>();
+                project.roles = new ArrayList<>();
                 for (int j = 0; j < numberOfRoles; j++){
                     // Roles
                     line = br.readLine();
                     items = line.split(" ");
-                    project.roles.put(items[0], Integer.parseInt(items[1]));
+                    Skill skill = new Skill();
+                    skill.name = items[0];
+                    skill.level = Integer.parseInt(items[1]);
+                    project.roles.add(skill);
                 }
                 DataStore.projects.add(project);
             }
