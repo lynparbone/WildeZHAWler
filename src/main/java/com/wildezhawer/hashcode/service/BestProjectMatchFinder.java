@@ -14,31 +14,36 @@ public class BestProjectMatchFinder {
             int requiredSkillLevel = project.roles.get(skill);
             int bestDistanceToSkill = -2; // people with 2 or more skill points below requirement aren't candidates
             Contributor bestMatch = null;
+            Contributor secondBestMatch = null;
+
             for (Contributor c : potentialContributors) {
                 if (bestMatches.contains(c)) {
                     continue;
                 }
 
                 int currentSkillLevel = c.skills.getOrDefault(skill, 0);
-                int currentDistanceToSkill = currentSkillLevel - requiredSkillLevel;
+                if (currentSkillLevel < requiredSkillLevel) {
+                    continue;
+                }
 
-                if (currentSkillLevel == requiredSkillLevel && currentDistanceToSkill != bestDistanceToSkill) {
+                // Exact matches are better because they get level ups
+                if (currentSkillLevel == requiredSkillLevel) {
                     bestMatch = c;
                     break;
                 }
 
-                // Optimization: Allow people with skill level -1 of requirement, but they need a mentor
-                if (bestDistanceToSkill < -1 && currentDistanceToSkill > bestDistanceToSkill) {
-                    bestMatch = c;
-                    bestDistanceToSkill = currentDistanceToSkill;
-                    continue;
+                if (secondBestMatch == null) {
+                    secondBestMatch = c;
                 }
 
-                if (bestDistanceToSkill > 0 && currentDistanceToSkill < bestDistanceToSkill) {
-                    bestMatch = c;
-                    bestDistanceToSkill = currentDistanceToSkill;
+                if (currentSkillLevel < secondBestMatch.skills.getOrDefault(skill, 0)) {
+                    secondBestMatch = c;
                 }
 
+            }
+
+            if (bestMatch == null) {
+                bestMatch = secondBestMatch;
             }
 
             // If there is no bestMatch for a skill, return an empty list, i.e. no matches
