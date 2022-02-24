@@ -10,7 +10,7 @@ import java.util.*;
 public class SimulationRunner {
 
     private List<Project> projects;
-    private Collection<Contributor> contributors;
+    private List<Contributor> contributors;
     private HashMap<String, Status> projectStatus = new HashMap<>();
     private enum Status {
             NOT_STARTED,
@@ -95,6 +95,12 @@ public class SimulationRunner {
     }
 
     private void levelUpContributers(List<Project> completedProjects) {
+        for(Project project : completedProjects){
+            List<String> contributers = projectStaffing.get(project.getName());
+            for(){
+
+            }
+        }
 
     }
 
