@@ -41,8 +41,12 @@ public class BestProjectMatchFinder {
 
             }
 
-            bestMatches.add(bestMatch);
+            // If there is no bestMatch for a skill, return an empty list, i.e. no matches
+            if (bestMatch == null) {
+                return List.of();
+            }
 
+            bestMatches.add(bestMatch);
         }
 
         return bestMatches;
