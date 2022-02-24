@@ -12,4 +12,6 @@ public class Project {
     public int score;
     public int bestBefore;
     public Map<String, Integer> roles;
+
+    public int startDay;
 }
