@@ -35,12 +35,16 @@ public class SimulationRunner {
 
             changeProjectStatusToFalse(dayCounter);
 
-            // get not staffet contributers
-            // get not started projects
+            List<Contributor> availableContributors = getAllAvailableContributers();
 
-            // Staffing
-
-            // Update staffing list
+            for (Project project : projects) {
+                if (projectStatus.get(project.getName()) == Status.NOT_STARTED) {
+                    List<Contributor> assignedContributors = BestProjectMatchFinder.findBestMatchesForProject(project, availableContributors);
+                    if (!assignedContributors.isEmpty()) {
+                        updateStaffingInformation(project, assignedContributors);
+                    }
+                }
+            }
 
             dayCounter++;
         }
@@ -87,6 +91,11 @@ public class SimulationRunner {
                 if (project.getStartDay()+project.getDuration() == day) {
                     projectStatus.put(project.getName(), Status.COMPLETED);
                     completedProjects.add(project);
+
+                    // set contributer status to true
+                    for (String contributorName : projectStaffing.get(project.getName())) {
+                        contributerStatus.put(contributorName, true);
+                    }
                 }
             }
         }
@@ -108,24 +117,24 @@ public class SimulationRunner {
         List<Contributor> availableContributers = new ArrayList<>();
 
         for (Contributor contributor : contributors) {
-            boolean isAvailable = true;
-
-            for (Project project : projects) {
-                if (projectStatus.get(project.getName()) == Status.STARTED) {
-                    for (String contributerNameFromStaffingList : projectStaffing.get(project.getName())) {
-                        if (contributerNameFromStaffingList.equals(contributor.getName())) {
-                            isAvailable = false;
-                        }
-                    }
-                }
-            }
-
-            if (isAvailable) {
+            if (contributerStatus.get(contributor.getName())) {
                 availableContributers.add(contributor);
             }
         }
 
         return availableContributers;
+    }
+
+    private void updateStaffingInformation(Project project, List<Contributor> assignedContributors) {
+        List<String> contributorNames = new ArrayList<>();
+
+        for (Contributor contributor : assignedContributors) {
+            contributerStatus.put(contributor.getName(), false);
+            contributorNames.add(contributor.getName());
+        }
+
+        projectStaffing.put(project.getName(), contributorNames);
+        projectStatus.put(project.getName(), Status.STARTED);
     }
 
 
