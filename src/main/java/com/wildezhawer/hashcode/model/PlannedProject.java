@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class PlannedProject {
-    public Project project;
-    public List<Contributor> contributors;
+    public String project;
+    public List<String> contributors;
 }

@@ -17,10 +17,9 @@ public class FileWriterService {
         write(String.valueOf(DataStore.plannedProjects.size()));
         newLine();
         for (PlannedProject plannedProject : DataStore.plannedProjects){
-            write(plannedProject.project.name);
+            write(plannedProject.project);
             newLine();
-            List<String> contributorNamesAsList = plannedProject.contributors.stream().map(contributor -> contributor.name).collect(Collectors.toList());
-            write(String.join( " ", contributorNamesAsList));
+            write(String.join( " ", plannedProject.contributors));
         }
         close();
     }

@@ -6,13 +6,18 @@ import lombok.AllArgsConstructor;
 
 import java.util.*;
 
-@AllArgsConstructor
 public class SimulationRunner {
 
-    private List<Project> projects;
+    public List<Project> projects;
     private List<Contributor> contributors;
-    private HashMap<String, Status> projectStatus = new HashMap<>();
-    private enum Status {
+
+    public SimulationRunner(List<Project> projects, List<Contributor> contributors) {
+        this.projects = projects;
+        this.contributors = contributors;
+    }
+
+    public HashMap<String, Status> projectStatus = new HashMap<>();
+    public enum Status {
             NOT_STARTED,
             STARTED,
             TOO_LATE,
@@ -21,7 +26,7 @@ public class SimulationRunner {
 
     private HashMap<String, Boolean> contributerStatus = new HashMap<>();
 
-    private HashMap<String, List<String>> projectStaffing = new HashMap<>();
+    public HashMap<String, List<String>> projectStaffing = new HashMap<>();
 
 
     public void run() {
