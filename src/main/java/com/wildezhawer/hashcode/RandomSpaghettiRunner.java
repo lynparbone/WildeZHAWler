@@ -22,6 +22,7 @@ public class RandomSpaghettiRunner {
             //Simulation here
             DataStore.projects = ProjectSorter.sortProjects(DataStore.projects);
             SimulationRunner simulationRunner = new SimulationRunner(DataStore.projects, DataStore.contributors);
+
             simulationRunner.run();
 
             List<Project> projectList = simulationRunner.projects.stream().filter(project -> simulationRunner.projectStatus.get(project.getName()) == SimulationRunner.Status.COMPLETED).collect(Collectors.toList());

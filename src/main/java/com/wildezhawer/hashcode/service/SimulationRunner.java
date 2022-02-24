@@ -34,7 +34,20 @@ public class SimulationRunner {
 
         int dayCounter = 0;
 
-        while(continueRunningSimulation()) {
+        while(continueRunningSimulation() && dayCounter < 50000) {
+
+            if (dayCounter == 1000) {
+                int i = 0;
+            }
+
+            if (dayCounter == 10000) {
+                int i = 0;
+            }
+
+            if (dayCounter == 100000) {
+                int i = 0;
+            }
+
             List<Project> completedProjects = completeProject(dayCounter);
             levelUpContributers(completedProjects);
 
