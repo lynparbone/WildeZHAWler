@@ -3,9 +3,10 @@ package com.wildezhawer.hashcode.service;
 import com.wildezhawer.hashcode.model.Contributor;
 import com.wildezhawer.hashcode.model.Project;
 import com.wildezhawer.hashcode.model.Skill;
-import lombok.AllArgsConstructor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class SimulationRunner {
 
