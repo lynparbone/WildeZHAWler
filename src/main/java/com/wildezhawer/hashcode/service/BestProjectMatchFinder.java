@@ -16,28 +16,29 @@ public class BestProjectMatchFinder {
             Contributor bestMatch = null;
             Contributor secondBestMatch = null;
 
-            for (Contributor c : potentialContributors) {
-                if (bestMatches.contains(c)) {
+            for (Contributor contributor : potentialContributors) {
+                // Contributors may have other required skills. In this case they cannot be staffed twice.
+                if (bestMatches.contains(contributor)) {
                     continue;
                 }
 
-                int currentSkillLevel = c.skills.getOrDefault(skill.name, 0);
+                int currentSkillLevel = contributor.skills.getOrDefault(skill.name, 0);
                 if (currentSkillLevel < requiredSkillLevel) {
                     continue;
                 }
 
                 // Exact matches are better because they get level ups
                 if (currentSkillLevel == requiredSkillLevel) {
-                    bestMatch = c;
+                    bestMatch = contributor;
                     break;
                 }
 
                 if (secondBestMatch == null) {
-                    secondBestMatch = c;
+                    secondBestMatch = contributor;
                 }
 
                 if (currentSkillLevel < secondBestMatch.skills.getOrDefault(skill.name, 0)) {
-                    secondBestMatch = c;
+                    secondBestMatch = contributor;
                 }
 
             }

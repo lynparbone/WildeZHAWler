@@ -9,7 +9,10 @@ import java.util.stream.Collectors;
 
 public class ProjectSorter {
 
-    public static List<Project> sortProjects(Collection<Project> unsortedProjects) {
+    /*
+        Sort the projects by duration (ascending), so the shorter projects are addressed first.
+     */
+    public static List<Project> sortProjectsByDurationAscending(Collection<Project> unsortedProjects) {
         return unsortedProjects.stream()
                 .sorted(Comparator.comparing(Project::getDuration))
                 .collect(Collectors.toList());

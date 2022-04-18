@@ -1,14 +1,18 @@
 package com.wildezhawer.hashcode;
 
-import com.wildezhawer.hashcode.config.SimulationConfiguration;
 import com.wildezhawer.hashcode.model.PlannedProject;
 import com.wildezhawer.hashcode.model.Project;
-import com.wildezhawer.hashcode.service.*;
+import com.wildezhawer.hashcode.service.DataStore;
+import com.wildezhawer.hashcode.service.FileReaderService;
+import com.wildezhawer.hashcode.service.FileWriterService;
+import com.wildezhawer.hashcode.service.SimulationRunner;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.wildezhawer.hashcode.config.SimulationConfiguration.FILES_TO_READ;
+import static com.wildezhawer.hashcode.service.ProjectSorter.sortProjectsByDurationAscending;
 
 public class RandomSpaghettiRunner {
 
@@ -16,46 +20,50 @@ public class RandomSpaghettiRunner {
     FileWriterService fileWriter = new FileWriterService();
 
     public void start() throws Exception {
-        for (String filename : SimulationConfiguration.FILES_TO_READ) {
+        for (String filename : FILES_TO_READ) {
+            // Preparation for simulation
             read(filename);
+            DataStore.projects = sortProjectsByDurationAscending(DataStore.projects);
 
-            //Simulation here
-            DataStore.projects = ProjectSorter.sortProjects(DataStore.projects);
+            // Run simulation, i.e. plan the projects
             SimulationRunner simulationRunner = new SimulationRunner(DataStore.projects, DataStore.contributors);
 
             simulationRunner.run();
 
-            List<Project> projectList = simulationRunner.projects.stream().filter(project -> simulationRunner.projectStatus.get(project.getName()) == SimulationRunner.Status.COMPLETED).collect(Collectors.toList());
+            // Retrieve all the completed projects
+            List<Project> completedProjects = simulationRunner.projects.stream()
+                    .filter(project -> simulationRunner.allProjectStatus.get(project.getName()) == SimulationRunner.ProjectStatus.COMPLETED)
+                    .collect(Collectors.toList());
 
-            List<PlannedProject> plannedProjectList =new ArrayList<>();
-            for (Project project : projectList) {
+            // Setup results for correct output format
+            List<PlannedProject> plannedProjects = new ArrayList<>();
+            for (Project project : completedProjects) {
                 PlannedProject plannedProject = new PlannedProject();
                 plannedProject.setProject(project.getName());
                 plannedProject.setContributors(simulationRunner.projectStaffing.get(project.getName()));
-                plannedProjectList.add(plannedProject);
+                plannedProjects.add(plannedProject);
             }
 
-            DataStore.plannedProjects = plannedProjectList;
+            DataStore.plannedProjects = plannedProjects;
 
+            // Write the output files in the correct format
             write(filename);
-            reset();
+            resetDatastore();
         }
     }
 
-    private void reset() {
+    private void read(String filename) throws Exception {
+        fileReader.read("input/" + filename);
+    }
+
+    private void write(String filename) throws Exception {
+        fileWriter.writeFile("output/" + filename);
+    }
+
+    private void resetDatastore() {
         DataStore.projects = new ArrayList<>();
         DataStore.contributors = new ArrayList<>();
         DataStore.plannedProjects = new ArrayList<>();
     }
-
-    void read(String filename) throws Exception {
-        fileReader.read("data/" + filename);
-    }
-
-    private void write(String filename) throws Exception {
-        fileWriter.writeFile("out/" + filename);
-    }
-
-
 
 }

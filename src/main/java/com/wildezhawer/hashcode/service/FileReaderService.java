@@ -11,25 +11,17 @@ import java.util.HashMap;
 
 public class FileReaderService {
 
-    private final static String DATA_FOLDER = System.getProperty("user.dir") + "/data/";
-
     public void read(String filename) throws Exception {
-        String line = "";
-        String[] items;
-
-        int contributorCount;
-        int projectCount;
-
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             // Read first line
-            line = br.readLine();
-            items = line.split(" ");
+            String line = br.readLine();
+            String[] items = line.split(" ");
 
-            contributorCount = Integer.parseInt(items[0]);
-            projectCount = Integer.parseInt(items[1]);
+            int numberOfContributors = Integer.parseInt(items[0]);
+            int numberOfProjects = Integer.parseInt(items[1]);
 
             // Read contributors
-            for (int i = 0; i < contributorCount; i++){
+            for (int i = 0; i < numberOfContributors; i++){
                 line = br.readLine();
                 items = line.split(" ");
 
@@ -48,7 +40,7 @@ public class FileReaderService {
             }
 
             // Read Projects
-            for (int i = 0; i < projectCount; i++){
+            for (int i = 0; i < numberOfProjects; i++){
                 line = br.readLine();
                 items = line.split(" ");
 
