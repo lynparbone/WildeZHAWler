@@ -8,31 +8,31 @@ More information: [Google Hash Code](https://codingcompetitions.withgoogle.com/h
 > You are given a list of contributors, who have already mastered various skills, and a list of projects with different skill requirements. Contributors can improve their skills by completing projects and can mentor each other to work is roles in which they couldn't succeed on their own. Your task is to assign contributors to project roles that fit their qualifications and maximize the score for completed projects.
 ### Contributors
 * A contributor has 
-** A name 
-** >= 1 skill with a level (0, 1, 2, ..)
+  * A name 
+  * >= 1 skill with a level (0, 1, 2, ..)
 * Not possessing a skill => level 0
 
 ### Projects
 * A project has
-** A name
-** A duration in days (how long to complete once started)
-** Score for completion
-** Best before time in days
-*** If the project is worked on during or after the best before day, it loses 1 point for each day it is late, but no less than 0 points.
-** A list of >=1 roles (skills at certain level) for the required contributors
+  * A name
+  * A duration in days (how long to complete once started)
+  * Score for completion
+  * Best before time in days
+    * If the project is worked on during or after the best before day, it loses 1 point for each day it is late, but no less than 0 points.
+  * A list of >=1 roles (skills at certain level) for the required contributors
 * A contributor can fill at most one role on a single project
 
 ### Filling roles and mentorship
 * A contributor can be assigned to a project for a role if
-** They have the skill at the required level or higher OR
-** They have the skill one level below the required level, if another contributor on the project (assigned to a _different_ role) has the skill at least at the required level
+  * They have the skill at the required level or higher OR
+  * They have the skill one level below the required level, if another contributor on the project (assigned to a _different_ role) has the skill at least at the required level
 * A contributor can mentor multiple people at once, also for the same skill
 * A contributor can mentor and be mentored at the same time
 
 #### Learning
 * When a project is completed
-** Contributors working in a project where the required skill level was equal or higher: Their level is improved by 1
-** Other contributors keep the skill level (even if they mentored)
+  * Contributors working in a project where the required skill level was equal or higher: Their level is improved by 1
+  * Other contributors keep the skill level (even if they mentored)
 * Note: Even if the project scores 0, contributors will get a level up
 
 ### Assignments
