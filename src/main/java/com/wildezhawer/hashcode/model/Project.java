@@ -3,7 +3,6 @@ package com.wildezhawer.hashcode.model;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 public class Project {

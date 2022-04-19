@@ -19,6 +19,10 @@ public class RandomSpaghettiRunner {
     FileReaderService fileReader = new FileReaderService();
     FileWriterService fileWriter = new FileWriterService();
 
+    public static void main(String[] args) throws Exception {
+        new RandomSpaghettiRunner().start();
+    }
+
     public void start() throws Exception {
         for (String filename : FILES_TO_READ) {
             // Preparation for simulation
